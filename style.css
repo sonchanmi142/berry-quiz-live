@@ -1,0 +1,16 @@
+
+:root{font-family:Pretendard,"Noto Sans KR",Arial,sans-serif;color:#172033;background:#f4f6fb}
+*{box-sizing:border-box}body{margin:0;min-height:100vh}.wrap{max-width:1100px;margin:auto;padding:20px}
+.card{background:#fff;border:1px solid #e5e8f0;border-radius:24px;padding:24px;margin:16px 0}
+h1{font-size:clamp(30px,5vw,58px);margin:.15em 0}.muted{color:#687086}
+button,input,textarea,select{font:inherit;border-radius:14px;border:1px solid #d7dce8;padding:13px}
+button{border:0;background:#506fe5;color:#fff;font-weight:800;cursor:pointer}
+button.secondary{background:#e9ecf4;color:#293247}.danger{background:#c94757}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.choice{min-height:90px;font-size:20px}.red{background:#df4b65}.blue{background:#4571c8}.yellow{background:#c99720}.green{background:#359c70}
+.hidden{display:none!important}.room{font-size:52px;font-weight:900;letter-spacing:8px}.players{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:#edf0ff;padding:8px 12px;border-radius:999px}.leader{display:grid;grid-template-columns:60px 1fr auto;gap:12px;padding:12px;border-bottom:1px solid #eee;font-size:20px}
+.progress{height:12px;border-radius:999px;background:#e5e7ef;overflow:hidden}.bar{height:100%;background:#506fe5;width:100%;transition:width .2s}
+.qimg{display:block;max-width:100%;max-height:360px;margin:16px auto;border-radius:18px;object-fit:contain}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.question-item{border:1px solid #e5e8f0;border-radius:18px;padding:16px;margin:12px 0}
+.preview{max-width:180px;max-height:120px;border-radius:12px;object-fit:contain}
+@media(max-width:650px){.grid,.form-row{grid-template-columns:1fr}.wrap{padding:10px}.choice{min-height:70px}.room{font-size:36px}}
