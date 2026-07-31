@@ -12,9 +12,9 @@ const io = new Server(server, { cors: { origin: "*" } });
 
 const PORT = process.env.PORT || 3000;
 const MAX_PLAYERS = 40;
-const QUESTION_FILE = path.join(__dirname, "data", "questions.json");
+const QUESTION_FILE = path.join(__dirname, "questions.json");
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(__dirname));
 app.use(express.json({ limit: "12mb" }));
 
 let questions = loadQuestions();
