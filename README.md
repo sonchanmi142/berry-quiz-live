@@ -1,36 +1,30 @@
-# Berry Quiz Live V2
+# RADIQ Live V3
 
-## 새 기능
-- 인터넷만 되면 어디서든 QR로 입장 가능한 배포형 구조
-- 진행자가 입력창으로 문제와 선택지 A~D 작성
-- 선택지 2~4개 사용 가능
-- 문제 위 이미지 업로드
-- 참가자가 휴대폰에서 큰 버튼으로 답변
-- 정답 속도에 따른 점수
-- 최대 40명
-- 최종 전체 순위
+방사선학과용 실시간 퀴즈 앱입니다.
 
-## 컴퓨터에서 실행
-```powershell
-npm.cmd install
-npm.cmd start
-```
-브라우저에서 http://localhost:3000
+## 추가된 기능
+- Supabase 데이터베이스에 문제 영구 저장
+- Supabase Storage에 문제 이미지 영구 저장
+- 제한시간 종료 후 진행자와 참가자 화면에 정답 공개
+- 남은 시간을 큰 숫자로 표시
+- 10초 이하에서 숫자와 진행 막대가 빨간색으로 변경
+- 앱 이름을 RADIQ Live로 변경
+- QR 공개 입장, 최대 40명, 속도 점수, 최종 순위
 
-## 다른 와이파이·모바일 데이터에서도 접속시키기
-이 앱은 컴퓨터에서만 실행하면 외부 접속이 되지 않습니다.
-Render, Railway 같은 Node.js 호스팅에 배포해 공개 HTTPS 주소를 받아야 합니다.
+## Supabase 설정
+1. Supabase에서 새 프로젝트를 만듭니다.
+2. SQL Editor에 `supabase/setup.sql` 내용을 붙여넣고 실행합니다.
+3. Storage에서 public bucket을 만듭니다.
+   - 이름: `question-images`
+   - Public bucket: 켜기
+4. Project Settings > API에서 Project URL과 service_role key를 확인합니다.
 
-### Render 배포 순서
-1. 이 폴더를 GitHub 저장소에 업로드
-2. Render에서 New Web Service 선택
-3. 저장소 연결
-4. Build Command: npm install
-5. Start Command: npm start
-6. 배포 후 받은 https 주소로 접속
-7. 그 주소에서 퀴즈방을 만들면 QR도 공개 주소로 생성됨
+service_role 키는 GitHub에 직접 올리지 마세요.
 
-## 주의
-현재 문제는 data/questions.json에 저장됩니다.
-일부 무료 호스팅은 재배포 또는 재시작 시 작성한 문제가 초기화될 수 있습니다.
-행사 전에 문제를 모두 만든 뒤 data/questions.json 파일까지 GitHub에 반영하는 방식이 가장 안전합니다.
+## Render 환경변수
+Render 서비스의 Environment 메뉴에 다음을 추가합니다.
+- `SUPABASE_URL`: Supabase Project URL
+- `SUPABASE_SERVICE_ROLE_KEY`: Supabase service_role key
+- `SUPABASE_IMAGE_BUCKET`: `question-images`
+
+저장 후 Manual Deploy > Deploy latest commit을 실행합니다.

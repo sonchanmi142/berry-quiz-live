@@ -1,10 +1,17 @@
 services:
   - type: web
-    name: berry-quiz-live
+    name: radiq-live
     runtime: node
     plan: free
     buildCommand: npm install
     startCommand: npm start
+    healthCheckPath: /health
     envVars:
       - key: NODE_VERSION
         value: 24
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_IMAGE_BUCKET
+        value: question-images

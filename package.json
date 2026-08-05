@@ -1,16 +1,13 @@
 {
-  "name": "berry-quiz-live-v2",
-  "version": "2.0.0",
+  "name": "radiq-live",
+  "version": "3.0.0",
   "private": true,
-  "description": "공개 URL, QR 입장, 이미지 문제, 4지선다 입력, 실시간 순위를 지원하는 퀴즈 앱",
+  "description": "방사선학과 실시간 퀴즈 앱",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "engines": {
-    "node": ">=20"
-  },
+  "scripts": {"start": "node server.js"},
+  "engines": {"node": ">=20"},
   "dependencies": {
+    "@supabase/supabase-js": "2.57.4",
     "express": "5.2.1",
     "qrcode": "1.5.4",
     "socket.io": "4.8.3"
