@@ -1,0 +1,13 @@
+const socket=io(),$=id=>document.getElementById(id);let code='',timerInterval=null;
+function show(id){['start','lobby','game','final'].forEach(x=>$(x).classList.toggle('hidden',x!==id));}
+function renderPlayers(s){$('count').textContent=s.players.length;$('players').innerHTML=s.players.map(p=>`<span class="pill">${p.name}</span>`).join('');}
+function renderRank(rows,target='rank'){$(target).innerHTML=rows.map((p,i)=>`<div class="leader"><b>${i+1}</b><span>${p.name}</span><b>${p.score.toLocaleString()}점</b></div>`).join('');}
+function startTimer(seconds){clearInterval(timerInterval);const end=Date.now()+seconds*1000;const update=()=>{const ms=Math.max(0,end-Date.now()),remain=Math.ceil(ms/1000),pct=ms/(seconds*1000)*100;$('timer').textContent=remain;$('bar').style.width=`${pct}%`;const danger=remain<=10;$('timer').classList.toggle('danger',danger);$('bar').classList.toggle('danger',danger);if(remain<=0)clearInterval(timerInterval);};update();timerInterval=setInterval(update,100);}
+$('create').onclick=()=>socket.emit('host:create',{},r=>{if(!r.ok){$('error').textContent=r.error;return;}code=r.code;$('code').textContent=code;$('qr').src=`/api/qr/${code}`;show('lobby');renderPlayers(r.state);});
+$('next').onclick=()=>{show('game');socket.emit('host:startNext',{code});};
+$('next2').onclick=()=>{$('next2').classList.add('hidden');$('answerReveal').classList.add('hidden');socket.emit('host:startNext',{code});};
+$('finish').onclick=()=>socket.emit('host:finish',{code});
+socket.on('room:update',s=>{renderPlayers(s);$('answered').textContent=s.players.filter(p=>p.answered).length;$('totalPlayers').textContent=s.players.length;renderRank(s.ranking.slice(0,10));});
+socket.on('question',q=>{$('qno').textContent=`${q.index+1} / ${q.total}`;$('question').textContent=q.text;$('qimg').src=q.image||'';$('qimg').classList.toggle('hidden',!q.image);$('answers').innerHTML=q.choices.map((c,i)=>`<div class="choice ${['red','blue','yellow','green'][i%4]}" style="padding:22px;border-radius:16px;color:white;font-weight:800">${'ABCD'[i]}. ${c}</div>`).join('');$('answered').textContent='0';$('answerReveal').classList.add('hidden');startTimer(q.seconds);});
+socket.on('questionResult',r=>{clearInterval(timerInterval);$('timer').textContent='0';$('bar').style.width='0%';$('next2').classList.remove('hidden');$('correctAnswer').textContent=r.correct===null?'정답 없는 투표 문제':`${'ABCD'[r.correct]}. ${r.correctText}`;$('answerReveal').classList.remove('hidden');renderRank(r.ranking);});
+socket.on('gameFinished',r=>{clearInterval(timerInterval);show('final');renderRank(r.ranking,'finalRank');});
